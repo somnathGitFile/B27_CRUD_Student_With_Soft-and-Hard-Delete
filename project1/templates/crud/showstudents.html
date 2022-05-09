@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+<title>Show Students</title>
+{% endblock %}
+
+{% block content %}
+{% load static %}
+<body style="background-color: #80ced6;">
+<div >
+<table class="table table-striped border border-dark " style="background-color:Lavender;">
+  <thead>
+  <center><h1>Student INFO</h1></center>
+    <tr>
+      <th scope="col">STUDENT ID</th>
+      <th scope="col">STUDENT NAME</th>
+      <th scope="col">STUDENT MARKS</th>
+      <th scope="col">STUDENT ADDRESS</th>
+      <th scope="col">STATUS</th>
+      <th>UPDATE</th>
+      <th>DELETE</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in obj %}
+    <tr>
+      <td><b><i>{{i.sid}}</i></b></td>
+      <td><b><i>{{i.sname}}</i></b></td>
+      <td><b><i>{{i.smarks}}</i></b></td>
+      <td><b><i>{{i.sadd}}</i></b></td>
+      <td><b><i>{{i.status}}</i></b></td>
+      <td><button class="btn btn-warning"><a href="{% url 'update_url' i.id %}">UPDATE</a></button></td>
+      <td><button class="btn btn-danger"><a href="{% url 'delete_url' i.id %}">DELETE</a></button></td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+  <div align="center">
+{% if obj.has_previous %}
+    <a href="{% url 'showstu_url' obj.previous_page_number %}"><b>PREVIOUS</b></a>
+{% endif %}
+    <span>
+        page{{obj.number}} of {{obj.paginator.num_pages}}
+    </span>
+    {% if obj.has_next %}
+    <a href="{% url 'showstu_url' obj.next_page_number %}"><b>NEXT</b></a>
+    {% endif %}
+</div>
+</div>
+</body>
+
+{% endblock %}
